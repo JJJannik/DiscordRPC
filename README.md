@@ -1,7 +1,7 @@
 # Discord Rich Presence
 
-I made this small programm, so You can easily configure your own rich presence status. <br>
-It's only a cosmetic feature, so it does not provide possibilities to join someone's game/party through the status. <br>
+I made this small program, so You can easily configure your own rich presence status. <br>
+It's only a cosmetic feature, so it does not provide anything to join someone's game/party through the status. <br>
 
 This app uses the [Discord Game SDK Wrapper for Java by JnCrMx.](https://github.com/JnCrMx/discord-game-sdk4j) <br>
 
@@ -19,11 +19,13 @@ This app uses the [Discord Game SDK Wrapper for Java by JnCrMx.](https://github.
 3. Download the DiscordRPC.jar (For more information see: [Download](#download))
 4. Put the jar file in a place where you want to and open the terminal there.
    <br>Execute: `java -jar ./DiscordRPC.jar`
-5. A .yml file will be created in which the rich presence can be customized. <br>
+5. A `.yml` file will be created in which the rich presence can be customized. <br>
 For the beginning you have to paste you client application id from the [Discord Developer Portal](https://discord.com/developers/applications) into the DiscordRPC.yml config (the key is "applicationId").
 
+Don't worry about the program spamming info messages into the console, everything is fine as long as it's running,
+
 ### Tips:
-1. Instead of saving the application id in the config, you can also use the `-DapplicationId=<id>` parameter when starting the programm the first time. <br>
+1. Instead of saving the application id in the config, you can also use the `-DapplicationId=<id>` argument when starting the programm the first time. <br>
    This could look then like: `java -jar -DapplicationId=<id> ./DiscordRPC.jar`
 2. If you don't really know what to write in the config, you can take a look on the [Discord Developer Portal](https://discord.com/developers/applications) in your application -> Rich Presence -> Visualizer.
 3. Unsure what is meant with the timestamps? [This may help you](https://www.unixtimestamp.com/)
@@ -42,7 +44,7 @@ This key is required in the `DiscordRPC.yml`.
  
 ### Building from source
 
-To clone the repository:
+To clone the repository using git:
 
 ```shell
 git clone https://github.com/JJJannik/DiscordRPC

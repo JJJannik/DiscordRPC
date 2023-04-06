@@ -1,4 +1,4 @@
-name: Build the programm
+name: Build the program
 on:
   push:
     tag:
