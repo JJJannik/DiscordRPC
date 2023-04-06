@@ -37,7 +37,7 @@ This key is required in the `DiscordRPC.yml`.
 
 ## Download
 
-### Download from the newest Release
+### Download from the newest Release [(*click*)](https://github.com/JJJannik/DiscordRPC/releases)
  ![release.png](.github/resources/release.png)
  
 ### Building from source
