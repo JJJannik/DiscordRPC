@@ -33,6 +33,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/libs/discord-ticketbot.jar
-          asset_name: discord-ticketbot.jar
+          asset_path: ./build/libs/DiscordRPC.jar
+          asset_name: DiscordRPC.jar
           asset_content_type: application/java-archive
