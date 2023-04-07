@@ -14,7 +14,8 @@ This app uses the [Discord Game SDK Wrapper for Java by JnCrMx.](https://github.
 
 ## How to use?
 
-1. Log into the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application. The name of this application will display then after the "Playing" status.
+1. Log into the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application. <br>
+   The name of this application will display then behind the "Playing" status.
 2. Install [Java *(click)*](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 3. Download the DiscordRPC.jar (For more information see: [Download](#download))
 4. Put the jar file in a place where you want to and open the terminal there.
@@ -25,11 +26,18 @@ For the beginning you have to paste you client application id from the [Discord 
 Don't worry about the program spamming info messages into the console, everything is fine as long as it's running,
 
 ### Tips:
-1. Instead of saving the application id in the config, you can also use the `-DapplicationId=<id>` argument when starting the programm the first time. <br>
+1. You can also just create a start.bat file in the same directory where your jar is located in. In this .bat file you have to add:
+     ```shell
+         java -jar DiscordRPC.jar
+         pause 
+      ````
+      Now, you can just double-click the start script to run the program.
+
+2. Instead of saving the application id in the config, you can also use the `-DapplicationId=<id>` argument when starting the programm the first time. <br>
    This could look then like: `java -jar -DapplicationId=<id> ./DiscordRPC.jar`
-2. If you don't really know what to write in the config, you can take a look on the [Discord Developer Portal](https://discord.com/developers/applications) in your application -> Rich Presence -> Visualizer.
-3. Unsure what is meant with the timestamps? [This may help you](https://www.unixtimestamp.com/)
-4. If you cannot see the rich presence displaying on your profile, try to enable "Display current activity as status message." in the Activity Privacy settings on Discord.
+3. If you don't really know what to write in the config, you can take a look on the [Discord Developer Portal](https://discord.com/developers/applications) in your application -> Rich Presence -> Visualizer.
+4. Unsure what is meant with the timestamps? [This may help you](https://www.unixtimestamp.com/)
+5. If you cannot see the rich presence displaying on your profile, try to enable "Display current activity as status message." in the Activity Privacy settings on Discord.
 
 ## How to use the assets?
 
