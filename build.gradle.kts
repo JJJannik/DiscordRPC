@@ -14,6 +14,8 @@ repositories {
 dependencies {
     implementation("com.github.JnCrMx:discord-game-sdk4j:java-impl-SNAPSHOT")
 
+    implementation("com.formdev", "flatlaf", "3.1")
+
     implementation("org.slf4j", "slf4j-log4j12", "2.0.1")
     implementation("org.apache.logging.log4j", "log4j-api", "2.19.0")
     implementation("org.apache.logging.log4j", "log4j-core", "2.19.0")

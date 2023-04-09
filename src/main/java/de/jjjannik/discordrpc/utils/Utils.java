@@ -27,4 +27,15 @@ public class Utils {
             return null;
         }
     }
+
+    public static byte[] getResourceData(String resourcePath) {
+        try (InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath)){
+            if (in != null) {
+                return in.readAllBytes();
+            }
+        } catch (IOException e) {
+            log.error("Could not get resource as file", e);
+        }
+        return new byte[0];
+    }
 }
