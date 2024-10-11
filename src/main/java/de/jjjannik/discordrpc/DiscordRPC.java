@@ -5,6 +5,7 @@ import de.jcm.discordgamesdk.CreateParams;
 import de.jcm.discordgamesdk.activity.*;
 import de.jjjannik.discordrpc.utils.Config;
 import de.jjjannik.discordrpc.utils.Utils;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.yaml.snakeyaml.Yaml;
@@ -32,9 +33,7 @@ public class DiscordRPC {
             Files.copy(Utils.getResourceAsFile("DiscordRPC.yml").toPath(), file.toPath());
         }
 
-        Constructor constructor = new Constructor(Config.class);
-        Yaml yaml = new Yaml(constructor);
-        config = yaml.load(new FileInputStream(file));
+        config = new Yaml(new Constructor(Config.class)).load(new FileInputStream(file));
         if (config == null) {
             config = new Config();
             config.dumpConfig(file.getPath());
@@ -57,56 +56,34 @@ public class DiscordRPC {
             params.setClientID(config.getApplicationId());
             params.setFlags(CreateParams.getDefaultFlags());
             params.setFlags(CreateParams.Flags.NO_REQUIRE_DISCORD);
-            Core core = null;
-            try {
-                core = new Core(params);
-            } catch (RuntimeException e) {
-                log.error("\nThe application id: \"" + config.getApplicationId() + "\" is invalid.");
-                System.exit(1);
-            }
+
+            Core core = initCore(params);
+
             if (!Strings.isEmpty(config.getDetails())) {
                 activity.setDetails(config.getDetails());
             }
             if (!Strings.isEmpty(config.getState())) {
                 activity.setState(config.getState());
             }
-            boolean warnParty = false;
-            ActivityParty party = activity.party();
-            if (config.getPartySize() > 0 && config.getMaxPartySize() > 0) {
-                party.setID("AReallyNiceRandomPartyIdWhichNobodyNeeds");
-                ActivityPartySize partySize = party.size();
-                partySize.setCurrentSize(config.getPartySize());
-                partySize.setMaxSize(config.getMaxPartySize());
-            } else {
-                warnParty = true;
-            }
+
+            boolean warnParty = loadParty(activity);
+
             if (config.getEndTimestamp() > 0) {
                 ActivityTimestamps timestamps = activity.timestamps();
                 timestamps.setStart(Instant.ofEpochMilli(config.getStartTimestamp()));
                 timestamps.setEnd(Instant.ofEpochMilli(config.getEndTimestamp()));
             }
-            ActivityAssets assets = activity.assets();
-            if (!Strings.isEmpty(config.getLargeImageKey())) {
-                assets.setLargeImage(config.getLargeImageKey());
-            }
-            if (!Strings.isEmpty(config.getLargeImageText())) {
-                assets.setLargeText(config.getLargeImageText());
-            }
-            if (!Strings.isEmpty(config.getSmallImageKey())) {
-                assets.setSmallImage(config.getSmallImageKey());
-            }
-            if (!Strings.isEmpty(config.getSmallImageText())) {
-                assets.setSmallText(config.getSmallImageText());
-            }
+
+            loadAssets(activity);
+
             core.activityManager().updateActivity(activity);
-            Core finalCore = core;
+
             new Timer("Discord Rich Presence").schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    finalCore.runCallbacks();
+                    core.runCallbacks();
                 }}, 0, 16);
 
-            boolean finalWarn = warnParty;
             new Timer("Warnings").schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -115,12 +92,51 @@ public class DiscordRPC {
                     log.info("<< Activity started >>");
                     log.info("--------------------------");
                     System.out.println();
-                    if (finalWarn) {
+                    if (warnParty) {
                         log.warn("If you want to display a party, you have to provide partySize AND maxPartySize.\n");
                     }
                 }}, 500);
         } catch (Exception e) {
             log.error("Something went wrong", e);
+        }
+    }
+
+    private Core initCore(CreateParams params) {
+        try {
+            return new Core(params);
+        } catch (RuntimeException e) {
+            log.error("\nThe application id: \"{}\" is invalid.", config.getApplicationId());
+            System.exit(1);
+        }
+        return null;
+    }
+
+    private boolean loadParty(Activity activity) {
+        ActivityParty party = activity.party();
+        if (config.getPartySize() > 0 && config.getMaxPartySize() > 0) {
+            party.setID("AReallyNiceRandomPartyIdWhichNobodyNeeds");
+            ActivityPartySize partySize = party.size();
+            partySize.setCurrentSize(config.getPartySize());
+            partySize.setMaxSize(config.getMaxPartySize());
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private void loadAssets(Activity activity) {
+        ActivityAssets assets = activity.assets();
+        if (!Strings.isEmpty(config.getLargeImageKey())) {
+            assets.setLargeImage(config.getLargeImageKey());
+        }
+        if (!Strings.isEmpty(config.getLargeImageText())) {
+            assets.setLargeText(config.getLargeImageText());
+        }
+        if (!Strings.isEmpty(config.getSmallImageKey())) {
+            assets.setSmallImage(config.getSmallImageKey());
+        }
+        if (!Strings.isEmpty(config.getSmallImageText())) {
+            assets.setSmallText(config.getSmallImageText());
         }
     }
 }

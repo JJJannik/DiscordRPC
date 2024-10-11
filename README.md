@@ -67,4 +67,4 @@ Then open the Terminal in the repo folder and execute:
 The built Jar will appear in `/build/libs/DiscordRPC.jar`
 
 ### Any problems? 
-No problem! Either create an issue on this repo or contact me via Discord: JJJannik#3196
+No problem! Either create an issue on this repo or contact me via Discord: `jjjannik`
