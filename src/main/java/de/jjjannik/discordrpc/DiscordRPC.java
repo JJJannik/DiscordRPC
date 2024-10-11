@@ -20,7 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 @Slf4j
-public class DiscordRPC {
+public class DiscordRPC { // https://github.com/JnCrMx/discord-game-sdk4j/issues/71
     private Config config;
 
     public DiscordRPC() throws IOException {
@@ -56,6 +56,7 @@ public class DiscordRPC {
             params.setClientID(config.getApplicationId());
             params.setFlags(CreateParams.getDefaultFlags());
             params.setFlags(CreateParams.Flags.NO_REQUIRE_DISCORD);
+            activity.setActivityButtonsMode(ActivityButtonsMode.BUTTONS);
 
             Core core = initCore(params);
 
@@ -75,6 +76,7 @@ public class DiscordRPC {
             }
 
             loadAssets(activity);
+            loadButtons(activity);
 
             core.activityManager().updateActivity(activity);
 
@@ -122,6 +124,18 @@ public class DiscordRPC {
             return true;
         }
         return false;
+    }
+
+    private void loadButtons(Activity activity) {
+        ActivityButton button1 = config.getButton1();
+        if (button1 != null && !Strings.isEmpty(button1.getLabel())) {
+            activity.addButton(button1);
+        }
+
+        ActivityButton button2 = config.getButton1();
+        if (button2 != null && !Strings.isEmpty(button2.getLabel())) {
+            activity.addButton(button2);
+        }
     }
 
     private void loadAssets(Activity activity) {

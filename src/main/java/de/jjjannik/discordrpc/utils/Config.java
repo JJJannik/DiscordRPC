@@ -1,5 +1,6 @@
 package de.jjjannik.discordrpc.utils;
 
+import de.jcm.discordgamesdk.activity.ActivityButton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,8 @@ public class Config {
     private String largeImageText = "";
     private String smallImageKey = "";
     private String smallImageText = "";
+    private ActivityButton button1;
+    private ActivityButton button2;
     private int partySize;
     private int maxPartySize;
 

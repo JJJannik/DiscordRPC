@@ -10,6 +10,12 @@ largeImageKey: ""
 largeImageText: ""
 smallImageKey: ""
 smallImageText: ""
+button1:
+  label: ""
+  url: ""
+button2:
+  label: ""
+  url: ""
 partySize:
   0
 maxPartySize:
